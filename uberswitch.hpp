@@ -167,18 +167,15 @@ namespace uberswitch {
 
     namespace uberswitch {
         namespace oldcxxhacks {
-            template <typename T>
-            struct fakeremovecv;
 
+            template <typename T>
+            struct fakeremovecv { typedef T type; };
             template <typename T>
             struct fakeremovecv<const T> { typedef T type; };
             template <typename T>
             struct fakeremovecv<volatile T> { typedef T type; };
             template <typename T>
             struct fakeremovecv<volatile const T> { typedef T type; };
-
-            template <typename T>
-            struct fakedecay;
 
             template <typename T>
             struct fakedecay { typedef typename fakeremovecv<T>::type type; };
@@ -188,6 +185,7 @@ namespace uberswitch {
             struct fakedecay<T(&)[N]> { typedef typename fakeremovecv<T>::type *type; };
 
             /***/
+
             template<std::size_t _Len, std::size_t _Align>
             struct aligned_storage
             {
