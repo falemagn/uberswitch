@@ -167,7 +167,6 @@ namespace uberswitch {
 
     namespace uberswitch {
         namespace oldcxxhacks {
-
             template <typename T>
             struct fakeremovecv { typedef T type; };
             template <typename T>
@@ -185,7 +184,6 @@ namespace uberswitch {
             struct fakedecay<T(&)[N]> { typedef typename fakeremovecv<T>::type *type; };
 
             /***/
-
             template<std::size_t _Len, std::size_t _Align>
             struct aligned_storage
             {
@@ -197,11 +195,9 @@ namespace uberswitch {
             };
 
             // Inspired by https://stackoverflow.com/a/12053862/566849
-            template <typename T = void>
-            struct thread_local_impl_;
-
-            template <>
-            struct thread_local_impl_<void> {
+            // Use a template to leverage the One Definition Rule, so that we don't need to put the static data into a cpp file of its own.
+            template <typename T>
+            struct thread_local_impl_ {
                 static pthread_key_t key;
                 static pthread_once_t once_control;
 
@@ -231,13 +227,16 @@ namespace uberswitch {
                     pthread_setspecific(key, p);
                 }
 
-                template<class T> static void placement_delete(void* t) { reinterpret_cast<T*>(t)->~T(); }
+                template<class U> static void placement_delete(void* t) { reinterpret_cast<U*>(t)->~U(); }
             };
 
-            typedef thread_local_impl_<void> thread_local_;
 
-            pthread_key_t thread_local_::key;
-            pthread_once_t thread_local_::once_control = PTHREAD_ONCE_INIT;
+            template <typename T>
+            pthread_key_t thread_local_impl_<T>::key;
+            template <typename T>
+            pthread_once_t thread_local_impl_<T>::once_control = PTHREAD_ONCE_INIT;
+
+            typedef thread_local_impl_<void> thread_local_;
         }
     }
 #   define uberswitch_typeof_(x) __typeof__(x)
