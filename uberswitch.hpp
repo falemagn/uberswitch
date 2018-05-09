@@ -264,14 +264,16 @@ namespace uberswitch {
     /***/
 #endif
 
-#if uberswitch_GCC_VERSION_ > 70000
+#if uberswitch_GCC_VERSION_ >= 70000
+#   define uberswitch_mayfallthrough_ __attribute__((fallthrough));
     // This apparently unexplicable wrapping is due to a GCC bug: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=85153
 #   define uberswitch_PragmaWrap_(x) x
 #   define uberswitch_BeginIgnoreWarning_ uberswitch_PragmaWrap_(_Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wswitch-unreachable\""))
 #   define uberswitch_EndIgnoreWarning_ uberswitch_PragmaWrap_(_Pragma("GCC diagnostic pop"))
 #   define uberswitch_goto_(x) uberswitch_BeginIgnoreWarning_ goto x; uberswitch_EndIgnoreWarning_
 #else
-    #define uberswitch_goto_(x) goto x;
+#   define uberswitch_mayfallthrough_
+#   define uberswitch_goto_(x) goto x;
 #endif
 
 #define uberswitch(switchVal) uberswitch_impl_(uberswitch_mapclass_, switchVal)
@@ -294,6 +296,7 @@ namespace uberswitch {
     case __COUNTER__: if (!uberswitch_.match(uberswitch_val_, caseVal, uberswitch_state_)) { \
                           uberswitch_switch_redo_();                                         \
                       }                                                                      \
+    uberswitch_mayfallthrough_                                                               \
     uberswitch_match_:                                                                       \
     case __COUNTER__                                                                         \
 /***/
