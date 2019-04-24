@@ -5,6 +5,8 @@ A header-only, unobtrusive, almighty alternative to the C++ switch statement tha
 ## Sample usage (incomplete)
 
 ```cpp
+#include <uberswitch.hpp>
+
 // The holy grail of the switches: the string switch!
 int string2num(std::string s) {
     uberswitch(s) {
