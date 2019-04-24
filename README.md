@@ -19,11 +19,11 @@ int string2num(std::string s) {
         case("three"):
             return 3;
 
-		// fallthrough works too
+        // fallthrough works too
         case("four"):
         case("f0ur"):
             return 4
-    
+
         default: return -1;
     }
 }
@@ -32,13 +32,13 @@ int string2num(std::string s) {
 std::string pair2string(std::pair<int, int> p) {
     uberswitch(p) {
         case(std::make_pair(1, 2):
-	        return "12";
+            return "12";
 
-		case(std::make_pair(3, 4):
-			return "34";
+        case(std::make_pair(3, 4):
+            return "34";
 
-		default:
-			return "Unknown pair";
+        default:
+            return "Unknown pair";
     }
 }
 ```
