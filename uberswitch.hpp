@@ -291,9 +291,9 @@ namespace uberswitch {
     uberswitch_switch_(uberswitch_state_)                                                             \
 /***/
 
-#define case(caseVal)                                                                        \
+#define case(...)                                                                        \
                       uberswitch_goto_(uberswitch_match_)                                    \
-    case __COUNTER__: if (!uberswitch_.match(uberswitch_val_, caseVal, uberswitch_state_)) { \
+    case __COUNTER__: if (!uberswitch_.match(uberswitch_val_, __VA_ARGS__, uberswitch_state_)) { \
                           uberswitch_switch_redo_();                                         \
                       }                                                                      \
     uberswitch_mayfallthrough_                                                               \
