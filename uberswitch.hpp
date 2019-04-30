@@ -120,7 +120,7 @@ namespace uberswitch {
             #if __cplusplus >= 201103L
                 m_map.emplace(caseVal, state+1);
             #else
-                m_map.insert(typename std::map<T, int>::value_type(caseVal, state));
+                m_map.insert(typename std::map<T, int>::value_type(caseVal, state+1));
             #endif
 
             return Switch<T>::match(switchVal, caseVal, state);
