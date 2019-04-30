@@ -34,7 +34,8 @@ std::string pair2string(std::pair<int, int> p) {
         case(std::make_pair(1, 2)):
             return "12";
 
-        case(std::make_pair(3, 4)):
+        // List initialization works too
+        case({3, 4}):
             return "34";
 
         default:
