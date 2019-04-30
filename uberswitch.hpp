@@ -264,7 +264,7 @@ namespace uberswitch {
     /***/
 #endif
 
-#if uberswitch_GCC_VERSION_ >= 70000
+#if uberswitch_GCC_VERSION_ >= 70000 && !defined(Q_CREATOR_RUN)
 #   define uberswitch_mayfallthrough_ __attribute__((fallthrough));
     // This apparently unexplicable wrapping is due to a GCC bug: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=85153
 #   define uberswitch_PragmaWrap_(x) x
