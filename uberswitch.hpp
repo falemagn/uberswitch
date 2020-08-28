@@ -53,10 +53,6 @@ namespace uberswitch {
 #define uberswitch_label_(name,tag) uberswitch_cat_(uberswitch_cat_(uberswitch_cat_(uberswitch_label_,name),_),tag)
 #define uberswitch_match_ uberswitch_label_(match,__LINE__)
 
-
-#define uberswitch_decay_(x) std::decay<decltype(x)>::type
-#define uberswitch_thread_local_(T, v, ...) static thread_local T v(__VA_ARGS__)
-
 #if uberswitch_GCC_VERSION_ >= 70000 && !defined(Q_CREATOR_RUN)
     // This apparently unexplicable wrapping is due to a GCC bug: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=85153
 #   define uberswitch_PragmaWrap_(x) x
