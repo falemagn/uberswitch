@@ -73,18 +73,18 @@ namespace uberswitch {
 #   define uberswitch_goto_(x) goto x;
 #endif
 
-#define uberswitch(...)                                                                                                        \
-        if (const auto &uberswitch_val_ = __VA_ARGS__; false); else                                                            \
-        for (int uberswitch_state_ = __COUNTER__+1, uberswitch_loop_idx_ = -1; !++uberswitch_loop_idx_; uberswitch_state_ +=1) \
-        switch(uberswitch_state_)                                                                                              \
+#define uberswitch(...)                                           \
+    if (const auto &uberswitch_val_ = __VA_ARGS__; false); else   \
+    if (std::size_t uberswitch_state_ = __COUNTER__; false); else \
+    if (bool uberswitch_matched_ = false; false); else            \
+    while (!uberswitch_matched_)                                  \
+    switch(++uberswitch_state_)                                   \
 /***/
 
-#define case(...)                                                             \
-                      uberswitch_goto_(uberswitch_match_)                     \
-    case __COUNTER__: if (!uberswitch::match(uberswitch_val_, __VA_ARGS__)) { \
-                          uberswitch_loop_idx_ = -1; break;                   \
-                      }                                                       \
-    uberswitch_match_                                                         \
+#define case(...)                                                                                   \
+                      uberswitch_goto_(uberswitch_match_)                                           \
+    case __COUNTER__: if (!(uberswitch_matched_ = uberswitch::match(uberswitch_val_, __VA_ARGS__))) \
+                          break;                                                                    \
+    uberswitch_match_                                                                               \
 /***/
-
 #endif //!UBERSWITCH_HPP_
