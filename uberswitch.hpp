@@ -7,17 +7,27 @@
 
 namespace uberswitch {
 
+    namespace detail {
+    
+        template <typename T>
+        struct is_initializer_list: std::false_type {};
+        
+        template <typename T>
+        struct is_initializer_list<std::initializer_list<T>>: std::true_type {};
+    
+    }
+
     template <typename T = void>
     struct equal_to: std::equal_to<T>{};
     
-    template <typename T>
+    template <typename T, std::enable_if_t<!detail::is_initializer_list<T>::value>* = nullptr>
     constexpr bool match(const T &switchVal, const T &caseVal) {        
         return equal_to<T>()(switchVal, caseVal);
     }
 
     template <typename T, typename U>
-    constexpr bool match2(const T &switchVal, const U &caseVal) {
-        return equal_to<>()(switchVal, std::forward<U>(caseVal));
+    constexpr bool match(const T &switchVal, const U &caseVal) {
+        return equal_to<>()(switchVal, caseVal);
     }
     
     template <typename T, typename U>
