@@ -40,6 +40,12 @@ namespace uberswitch {
         return sizeof...(Us) == switchVal.size() && ((switchVal.begin()[Is] == std::get<Is>(caseVal)) && ...);        
     }
     
+    template <typename T, typename... Us>
+    constexpr bool match(const std::initializer_list<T> &switchVal, const Us &... caseVal) {
+        auto s = switchVal.begin();
+        return sizeof...(Us) == switchVal.size() && ((*(s++) == caseVal) && ...);        
+    }
+    
     template <typename T, template <typename...> typename Tuple, typename... Us>
     constexpr bool match(const std::initializer_list<T> &switchVal, const Tuple<Us...> &caseVal) {
         return match(switchVal, caseVal, std::index_sequence_for<Us...>());        
