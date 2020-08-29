@@ -52,7 +52,7 @@ namespace uberswitch {
 
 }
 
-static constexpr bool uberswitch_next_nesting_level_ = 0;
+constexpr bool uberswitch_next_nesting_level_ = 0;
 
 #if UBERSWITCH_ALLOW_NESTING
 #   include "fameta/counter.hpp"
@@ -63,12 +63,12 @@ static constexpr bool uberswitch_next_nesting_level_ = 0;
     /***/
 #   define uberswitch_counter_next_() uberswitch_counter_.next<__COUNTER__>()
 #else
-#   define uberswitch_counter_type_ struct {                                                                                                  \
-        static_assert(uberswitch_next_nesting_level_ > 0, "Eeek! Summon the maintainer, things went havoc!");                                 \
+#   define uberswitch_counter_type_ struct {                                                                                              \
+        static_assert(uberswitch_next_nesting_level_ > 0, "Eeek! Summon the maintainer, things went havoc!");                             \
         static_assert(uberswitch_nesting_level_ == 0, "#define UBERSWITCH_ALLOW_NESTING to 1 if you want to nest uberswitch constructs"); \
-        enum : std::size_t { start = __COUNTER__+1 };                                                                                         \
-        std::size_t idx = 0;                                                                                                                  \
-    }                                                                                                                                         \
+        enum : std::size_t { start = __COUNTER__+1 };                                                                                     \
+        std::size_t idx = 0;                                                                                                              \
+    }                                                                                                                                     \
     /***/
 #   define uberswitch_counter_next_() __COUNTER__ - uberswitch_counter_.start
 #endif
@@ -100,7 +100,14 @@ static constexpr bool uberswitch_next_nesting_level_ = 0;
 /***/
 
 #if UBERSWITCH_CASE_SHORTNAME
+#   if defined(__clang__)
+#       pragma GCC diagnostic push
+#       pragma GCC diagnostic ignored "-Wkeyword-macro"
+#   endif
 #   define case(...) ubercase(__VA_ARGS__)
+#   if defined(__clang__)
+#       pragma GCC diagnostic pop
+#   endif
 #endif
     
 #endif //!UBERSWITCH_HPP_

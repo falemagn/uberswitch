@@ -70,7 +70,7 @@ class fameta::counter {
     template <int N, typename = decltype(slot_value(slot<N>()))>
     static constexpr int reader(int, slot<N>, int R = slot_value(slot<N>())) {
         return R;
-    };
+    }
 #endif
 
     static_assert(sizeof(writer<StartN, StartValue-Step>), "Base case");
@@ -78,7 +78,7 @@ class fameta::counter {
     template <int N>
     static constexpr int reader(float, slot<N>, int R = reader(0, slot<N-1>())) {
         return R;
-    };
+    }
 
 public:    
 
