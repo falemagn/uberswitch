@@ -44,7 +44,7 @@ static constexpr bool uberswitch_next_nesting_level_ = 0;
 #if defined (UBERSWITCH_ALLOW_NESTING) && UBERSWITCH_ALLOW_NESTING
 #   include "fameta/counter.hpp"
 #   define uberswitch_counter_type_ struct uberswitch_counter_type_: fameta::counter<__COUNTER__, 0, 1, uberswitch_counter_type_> {             \
-        static_assert(uberswitch_next_nesting_level_ > 0 && uberswitch_nesting_level_ >= 0, "Eeek! Summon the maintainer, things went havoc!"); \                                                                                                                                                \
+        static_assert(uberswitch_next_nesting_level_ > 0 && uberswitch_nesting_level_ >= 0, "Eeek! Summon the maintainer, things went havoc!"); \
         std::size_t idx = 0;                                                                                                                    \
     }                                                                                                                                           \
     /***/
