@@ -42,5 +42,30 @@ std::string pair2string(std::pair<int, int> p) {
             return "Unknown pair";
     }
 }
+
+// You can actually switch over multiple items without packing them explicitly
+std::string pair2string(int a, int b) {
+    uberswitch(a, b) {
+        case(1, 2):
+            return "12";
+
+        case(3, 4):
+            return "34";
+
+        // And if you don't care about one of the items, you can use a wildcard
+        case(uberswitch::any, 5):
+            return "any5";
+            
+        // Fallthrough works as well.
+        case (6, 7):
+        case (8, 9):
+            return "67 or 89";
+            
+        default:
+            return "Unknown (a,b)";
+    }
+}
+
+
 ```
 
