@@ -5,7 +5,15 @@ A header-only, unobtrusive, almighty alternative to the C++ switch statement tha
 ## Sample usage (incomplete)
 
 ```cpp
+
+// Enable nesting
+#define UBERSWITCH_ALLOW_NESTING 1
+
+// Include the tool 
 #include <uberswitch/uberswitch.hpp>
+
+// Get leaner names
+#define case(...) ubercase(__VA_ARGS__)
 
 // The holy grail of the switches: the string switch!
 int string2num(std::string s) {

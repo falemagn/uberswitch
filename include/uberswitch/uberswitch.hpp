@@ -72,7 +72,7 @@ static constexpr bool uberswitch_next_nesting_level_ = 0;
     switch (uberswitch_counter_.idx)                                                                               \
 /***/
     
-#define case(...)                                                                    \
+#define ubercase(...)                                                                \
     case uberswitch_counter_next_():                                                 \
         if (!uberswitch_matched_) {                                                  \
             uberswitch_matched_ = uberswitch::match(uberswitch_value_, __VA_ARGS__); \
