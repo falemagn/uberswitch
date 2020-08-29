@@ -44,7 +44,9 @@ std::string pair2string(std::pair<int, int> p) {
 }
 
 // You can actually switch over multiple items without packing them explicitly
-std::string pair2string(int a, int b) {
+// and the whole construct is constexpr!
+constexpr const char* pair2string(int a, int b) {
+    uberswitch(a, b) {
     uberswitch(a, b) {
         case(1, 2):
             return "12";
