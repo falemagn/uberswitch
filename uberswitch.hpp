@@ -21,7 +21,12 @@ namespace uberswitch {
     constexpr bool match(const std::tuple<T, Us...> &value, Xs &&... xs) {
         return value == std::forward_as_tuple(std::forward<Xs>(xs)...);
     }
-
+    
+    template <typename T, typename... Us>
+    constexpr bool match(const std::tuple<T, Us...> &value, const std::decay_t<T> &t, const std::decay_t<Us> &... us) {
+        return value == std::forward_as_tuple(t, us...);
+    }
+    
     inline constexpr struct any final {
         template <typename T>
         friend constexpr bool operator==(const any &, const T &) { return true; }
