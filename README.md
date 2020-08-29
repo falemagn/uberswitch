@@ -108,5 +108,49 @@ constexpr const char* pair2string(int a, int b, int c) {
     return "You found the code to break out!";
 }
 
+// Within the standard uberswitch the continue keyword acts just like the break keyword, which makes it unusable for its intended purpose.
+// However, for those cases in which such a functionality is required, uberswitch_c and case_c can be used. 
+// The trailing 'c' stands for 'context', which is an identifier or a number used as the first parameter of both and needs to be kept in synch between them. 
+// Uberswitch_c and case_c cannot be used in constexpr functions and require c++17. This is a necessary cost to be able to use the continue keyword as it was intended.
+
+// The below function, given 
+std::string pairs_in_map(const std::map<int, std::string> &map) {
+    std::string ret;
+    
+    for (const auto &p: map) {
+        uberswitch_c (M, p.first, p.second) {
+            case_c (M, 1, "2"):
+                ret.append("12");
+                break;
+
+            case_c (M, 3, "4"):
+                ret.append("34");
+                break;
+
+            default:
+                ret.append("[").append(std::to_string(p.first)).append(p.second).append("]");
+                continue;
+        }
+        
+        ret.append("-");
+    }
+        
+    return ret;
+}
+
+// The above function, given the following map as input:
+//
+//     std::map<int, std::string> m {
+//         { 2, "4"},
+//         { 1, "2"},
+//         { 5, "6"},
+//         { 3, "4"},
+//         { 7, "8"}
+//    };
+//
+// Produces the following output:
+//
+//     12-[24]34-[56][78]    
+
 ```
 
