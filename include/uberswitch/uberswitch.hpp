@@ -1,6 +1,19 @@
 #ifndef UBERSWITCH_HPP_
 #define UBERSWITCH_HPP_
 
+// Configuration macros to define before including uberswitch.hpp
+
+/// Define to 1 to allow nesting uberswitch statements. In that case, fameta::counter will be included and used. 
+#if !defined(UBERSWITCH_ALLOW_NESTING)
+#    define UBERSWITCH_ALLOW_NESTING 0
+#endif
+
+/// Define to 0 to get the disable the definition of the case() macro and get only the ubercase() one, 
+/// in those very rare situations in which case() might conflict with existing code.
+#if !defined(UBERSWITCH_CASE_SHORTNAME)
+#    define UBERSWITCH_CASE_SHORTNAME 1
+#endif
+
 #include <tuple>
 
 namespace uberswitch {
@@ -41,7 +54,7 @@ namespace uberswitch {
 
 static constexpr bool uberswitch_next_nesting_level_ = 0;
 
-#if defined (UBERSWITCH_ALLOW_NESTING) && UBERSWITCH_ALLOW_NESTING
+#if UBERSWITCH_ALLOW_NESTING
 #   include "fameta/counter.hpp"
 #   define uberswitch_counter_type_ struct uberswitch_counter_type_: fameta::counter<__COUNTER__, 0, 1, uberswitch_counter_type_> {             \
         static_assert(uberswitch_next_nesting_level_ > 0 && uberswitch_nesting_level_ >= 0, "Eeek! Summon the maintainer, things went havoc!"); \
@@ -85,6 +98,10 @@ static constexpr bool uberswitch_next_nesting_level_ = 0;
             }                                                                        \
     case uberswitch_counter_next_()                                                  \
 /***/
+
+#if UBERSWITCH_CASE_SHORTNAME
+#   define case(...) ubercase(__VA_ARGS__)
+#endif
     
 #endif //!UBERSWITCH_HPP_
 

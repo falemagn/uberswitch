@@ -12,9 +12,6 @@ A header-only, unobtrusive, almighty alternative to the C++ switch statement tha
 // Include the tool 
 #include <uberswitch/uberswitch.hpp>
 
-// Get leaner names
-#define case(...) ubercase(__VA_ARGS__)
-
 // The holy grail of the switches: the string switch!
 int string2num(std::string s) {
     uberswitch (s) {
