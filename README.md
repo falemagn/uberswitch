@@ -62,9 +62,15 @@ constexpr const char* pair2string(int a, int b) {
         case (8, 9):
             return "67 or 89";
             
+        // And you can of course break out of the switch at any time.
+        case (0, 0):
+            break;
+            
         default:
             return "Unknown (a,b)";
     }
+    
+    return "You found the code to break out!";
 }
 
 
