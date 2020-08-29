@@ -73,6 +73,7 @@ constexpr bool uberswitch_next_nesting_level_ = 0;
 #   define uberswitch_counter_next_() __COUNTER__ - uberswitch_counter_.start
 #endif
 
+// This version is constexpr-safe and noise-free, but breaks the 'continue' keyword, in a away that makes it work just like the 'break' keyword.
 #define uberswitch(...)                                                                                            \
     for (bool uberswitch_var_init_ = true; uberswitch_var_init_; )                                                 \
         for (constexpr bool uberswitch_nesting_level_ = uberswitch_next_nesting_level_;  uberswitch_var_init_;)    \
@@ -99,12 +100,39 @@ constexpr bool uberswitch_next_nesting_level_ = 0;
     case uberswitch_counter_next_()                                                  \
 /***/
 
+
+// This version cannot be used in constexpr functions, can only be used from c++17 onwards and requires an additional first 'context' parameter,
+// which can be any identifier or even just a number, but it doesn't  break the 'continue' keyword.
+#define uberswitch_c(id, ...)                                                                       \
+    if (constexpr bool uberswitch_nesting_level_ = uberswitch_next_nesting_level_; false); else     \
+    if (constexpr bool uberswitch_next_nesting_level_ = uberswitch_nesting_level_+1;  false); else  \
+    if (uberswitch_counter_type_ uberswitch_counter_; false); else                                  \
+    if (bool uberswitch_matched_ = false; false); else                                              \
+    if (auto uberswitch_value_ = uberswitch::value(__VA_ARGS__); false); else                       \
+    uberswitch_label_##id##_:                                                                       \
+    switch (uberswitch_counter_.idx)                                                                \
+/***/
+    
+#define ubercase_c(id, ...)                                                          \
+    case uberswitch_counter_next_():                                                 \
+        if (!uberswitch_matched_) {                                                  \
+            uberswitch_matched_ = uberswitch::match(uberswitch_value_, __VA_ARGS__); \
+                                                                                     \
+                if (!uberswitch_matched_) {                                          \
+                    uberswitch_counter_.idx += 2;                                    \
+                    goto uberswitch_label_##id##_;                                   \
+                }                                                                    \
+            }                                                                        \
+    case uberswitch_counter_next_()                                                  \
+/***/
+
 #if UBERSWITCH_CASE_SHORTNAME
 #   if defined(__clang__)
 #       pragma GCC diagnostic push
 #       pragma GCC diagnostic ignored "-Wkeyword-macro"
 #   endif
 #   define case(...) ubercase(__VA_ARGS__)
+#   define case_c(...) ubercase_c(__VA_ARGS__)
 #   if defined(__clang__)
 #       pragma GCC diagnostic pop
 #   endif
