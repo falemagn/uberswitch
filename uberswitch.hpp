@@ -37,11 +37,6 @@ namespace uberswitch {
 
 }
 
-#define uberswitch_cat_(x,y) uberswitch_cat_2(x,y)
-#define uberswitch_cat_2(x,y) x##y
-
-#define uberswitch_match_ uberswitch_cat_(uberswitch_match_,__LINE__)
-
 #define uberswitch(...)                                                              \
     if (bool uberswitch_matched_ = false; false); else                               \
     if (std::size_t uberswitch_idx_ = __COUNTER__+1; false); else                    \
