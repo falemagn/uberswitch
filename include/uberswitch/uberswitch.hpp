@@ -27,7 +27,7 @@ namespace uberswitch {
 
     template <typename T, typename... Us>
     constexpr std::tuple<detail::copy_or_ref_t<T>, detail::copy_or_ref_t<Us>...> value(T && t, Us &&... us) {
-        return {t, us...};
+        return {std::forward<T>(t), std::forward<Us>(us)...};
     }
 
     template <typename T, typename... Us, typename... Xs>
