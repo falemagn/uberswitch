@@ -5,7 +5,7 @@ A header-only, unobtrusive, almighty alternative to the C++ switch statement tha
 ## Sample usage (incomplete)
 
 ```cpp
-#include <uberswitch.hpp>
+#include <uberswitch/uberswitch.hpp>
 
 // The holy grail of the switches: the string switch!
 int string2num(std::string s) {
@@ -73,6 +73,36 @@ constexpr const char* pair2string(int a, int b) {
     return "You found the code to break out!";
 }
 
+// Uberswitches can be nested if you define UBERSWITCH_ALLOW_NESTING to 1.
+// In that case, fameta::counter will be used to get access to compile time scoped counters, which are needed for the nesting functionality.
+constexpr const char* pair2string(int a, int b, int c) {
+    uberswitch (a, b) {
+        case (1, 2):
+            return "12";
+
+        case (3, 4):
+            return "34";
+
+        default:
+        
+            // Starting a new uberswitch here!
+            uberswitch (a, c) {
+                case (3, 5):
+                    return "35";
+                    
+                // And you can of course also break out of a nested switch.
+                case (0, 0):
+                    break;
+
+                default: 
+                    return "Unknown (a,b)";
+            }
+            
+            break;        
+    }
+    
+    return "You found the code to break out!";
+}
 
 ```
 
