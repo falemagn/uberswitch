@@ -112,8 +112,6 @@ constexpr const char* pair2string(int a, int b, int c) {
 // However, for those cases in which such a functionality is required, uberswitch_c and case_c can be used. 
 // The trailing 'c' stands for 'context', which is an identifier or a number used as the first parameter of both and needs to be kept in synch between them. 
 // Uberswitch_c and case_c cannot be used in constexpr functions and require c++17. This is a necessary cost to be able to use the continue keyword as it was intended.
-
-// The below function, given 
 std::string pairs_in_map(const std::map<int, std::string> &map) {
     std::string ret;
     
