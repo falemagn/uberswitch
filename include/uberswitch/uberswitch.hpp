@@ -148,7 +148,8 @@ namespace uberswitch {
         
         friend constexpr bool operator==(const any &, const any &) { return true; }
     } any;
-
+    
+    static_assert (any == any, "No warnings, please");
 }
 
 constexpr std::size_t uberswitch_next_nesting_level_ = 0;
