@@ -27,7 +27,7 @@ int string2num(std::string s) {
         // fallthrough works too
         case ("four"):
         case ("f0ur"):
-            return 4
+            return 4;
 
         default: return -1;
     }
