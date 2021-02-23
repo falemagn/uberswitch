@@ -8,10 +8,10 @@
 #    define UBERSWITCH_ALLOW_NESTING 0
 #endif
 
-/// Define to 0 to get the disable the definition of the case() macro and get only the ubercase() one, 
-/// in those very rare situations in which case() might conflict with existing code.
-#if !defined(UBERSWITCH_CASE_SHORTNAME)
-#    define UBERSWITCH_CASE_SHORTNAME 1
+/// Define to 0 to get the disable the definition of the ucase() and uswitch() macros and get only the ubercase() and uberswitch() ones, 
+/// in those very rare situations in which ucase() and uswitch() might conflict with existing code.
+#if !defined(UBERSWITCH_SHORTNAME)
+#    define UBERSWITCH_SHORTNAME 1
 #endif
 
 #include <tuple>
@@ -226,16 +226,10 @@ constexpr std::size_t uberswitch_next_nesting_level_ = 0;
     case uberswitch_counter_next_()                                                  \
 /***/
 
-#if UBERSWITCH_CASE_SHORTNAME
-#   if defined(__clang__)
-#       pragma GCC diagnostic push
-#       pragma GCC diagnostic ignored "-Wkeyword-macro"
-#   endif
-#   define case(...) ubercase(__VA_ARGS__)
-#   define case_c(...) ubercase_c(__VA_ARGS__)
-#   if defined(__clang__)
-#       pragma GCC diagnostic pop
-#   endif
+#if UBERSWITCH_SHORTNAME
+#   define uswitch(...) uberswitch(__VA_ARGS__)
+#   define ucase(...) ubercase(__VA_ARGS__)
+#   define ucase_c(...) ubercase_c(__VA_ARGS__)
 #endif
     
 #endif //!UBERSWITCH_HPP_
