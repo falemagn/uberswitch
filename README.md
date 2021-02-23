@@ -2,7 +2,7 @@
 # uberswitch
 A header-only, unobtrusive, almighty alternative to the C++ switch statement that looks just like the original.
 
-## Sample usage (incomplete)
+## Sample usage (incomplete - see it working on godbolt: https://godbolt.org/z/WTx6K1)
 
 ```cpp
 
