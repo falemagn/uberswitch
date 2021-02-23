@@ -8,6 +8,11 @@
 #    define UBERSWITCH_ALLOW_NESTING 0
 #endif
 
+/// Define to the fameta::counter include <path> or "path", to override the provided one
+#if !defined(UBERSWITCH_FAMETA_COUNTER_HPP)
+#    define UBERSWITCH_FAMETA_COUNTER_HPP "fameta/counter.hpp"
+#endif
+
 /// Define to 0 to get the disable the definition of the ucase() and uswitch() macros and get only the ubercase() and uberswitch() ones, 
 /// in those very rare situations in which ucase() and uswitch() might conflict with existing code.
 #if !defined(UBERSWITCH_SHORTNAME)
@@ -155,7 +160,7 @@ namespace uberswitch {
 constexpr std::size_t uberswitch_next_nesting_level_ = 0;
 
 #if UBERSWITCH_ALLOW_NESTING
-#   include "fameta/counter.hpp"
+#   include UBERSWITCH_FAMETA_COUNTER_HPP
 #   define uberswitch_counter_type_ struct uberswitch_counter_type_: fameta::counter<__COUNTER__, 0, 1, uberswitch_counter_type_> {             \
         static_assert(uberswitch_next_nesting_level_ > 0 && uberswitch_nesting_level_ >= 0, "Eeek! Summon the maintainer, things went havoc!"); \
         std::size_t idx = 0;                                                                                                                    \
