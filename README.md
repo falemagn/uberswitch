@@ -91,11 +91,11 @@ constexpr const char* pair2string(int a, int b, int c) {
         default:
             // Starting a new uberswitch here!
             uberswitch (a, c) {
-                case (3, 5):
+                ucase (3, 5):
                     return "35";
                     
                 // And you can of course also break out of a nested switch.
-                case (0, 0):
+                ucase (0, 0):
                     break;
 
                 default: 
