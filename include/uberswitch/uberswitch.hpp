@@ -228,6 +228,7 @@ constexpr std::size_t uberswitch_next_nesting_level_ = 0;
 
 #if UBERSWITCH_SHORTNAME
 #   define uswitch(...) uberswitch(__VA_ARGS__)
+#   define uswitch_c(...) uberswitch_c(__VA_ARGS__)
 #   define ucase(...) ubercase(__VA_ARGS__)
 #   define ucase_c(...) ubercase_c(__VA_ARGS__)
 #endif
