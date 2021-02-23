@@ -14,19 +14,19 @@ A header-only, unobtrusive, almighty alternative to the C++ switch statement tha
 
 // The holy grail of the switches: the string switch!
 int string2num(std::string s) {
-    uberswitch (s) {
-        case ("one"):
+    uswitch (s) {
+        ucase ("one"):
             return 1;
 
-        case ("two"):
+        ucase ("two"):
             return 2;
 
-        case ("three"):
+        ucase ("three"):
             return 3;
 
         // fallthrough works too
-        case ("four"):
-        case ("f0ur"):
+        ucase ("four"):
+        ucase ("f0ur"):
             return 4;
 
         default: return -1;
@@ -35,12 +35,12 @@ int string2num(std::string s) {
     
 // More unexpected types work too
 std::string pair2string(std::pair<int, int> p) {
-    uberswitch (p) {
-        case (std::make_pair(1, 2)):
+    uswitch (p) {
+        ucase (std::make_pair(1, 2)):
             return "12";
 
         // List initialization works too
-        case ({3, 4}):
+        ucase ({3, 4}):
             return "34";
 
         default:
@@ -51,24 +51,24 @@ std::string pair2string(std::pair<int, int> p) {
 // You can actually switch over multiple items without packing them explicitly
 // and the whole construct is constexpr!
 constexpr const char* pair2string(int a, int b) {
-    uberswitch (a, b) {
-        case (1, 2):
+    uswitch (a, b) {
+        ucase (1, 2):
             return "12";
 
-        case (3, 4):
+        ucase (3, 4):
             return "34";
 
         // And if you don't care about one of the items, you can use a wildcard
-        case (uberswitch::any, 5):
+        ucase (uberswitch::any, 5):
             return "any5";
             
         // Fallthrough works as well.
-        case (6, 7):
-        case (8, 9):
+        ucase (6, 7):
+        ucase (8, 9):
             return "67 or 89";
             
         // And you can of course break out of the switch at any time.
-        case (0, 0):
+        ucase (0, 0):
             break;
             
         default:
@@ -81,11 +81,11 @@ constexpr const char* pair2string(int a, int b) {
 // Uberswitches can be nested if you define UBERSWITCH_ALLOW_NESTING to 1.
 // In that case, fameta::counter will be used to get access to compile time scoped counters, which are needed for the nesting functionality.
 constexpr const char* pair2string(int a, int b, int c) {
-    uberswitch (a, b) {
-        case (1, 2):
+    uswitch (a, b) {
+        ucase (1, 2):
             return "12";
 
-        case (3, 4):
+        ucase (3, 4):
             return "34";
 
         default:
@@ -116,12 +116,12 @@ std::string pairs_in_map(const std::map<int, std::string> &map) {
     std::string ret;
     
     for (const auto &p: map) {
-        uberswitch_c (M, p.first, p.second) {
-            case_c (M, 1, "2"):
+        uswitch_c (M, p.first, p.second) {
+            ucase_c (M, 1, "2"):
                 ret.append("12");
                 break;
 
-            case_c (M, 3, "4"):
+            ucase_c (M, 3, "4"):
                 ret.append("34");
                 break;
 
