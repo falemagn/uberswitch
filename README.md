@@ -90,7 +90,7 @@ constexpr const char* pair2string(int a, int b, int c) {
 
         default:
             // Starting a new uberswitch here!
-            uberswitch (a, c) {
+            uswitch (a, c) {
                 ucase (3, 5):
                     return "35";
                     
